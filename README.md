@@ -1,6 +1,6 @@
 # Visalytics
 
-VISA. Anyone who's ever needed one will tell you: they're a pain to get.
+VISAs. Anyone who's ever needed one will tell you: they're a pain to get.
 
 Tonnes of paperwork, fees, queues and uncertainty. It's all run by private firms with no accountability. In the meantime, travelers suffer.
 
