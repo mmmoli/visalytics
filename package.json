@@ -1,0 +1,13 @@
+{
+  "name": "@visalytics/source",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {},
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {
+    "@nx/workspace": "16.4.2",
+    "nx": "16.4.2",
+    "nx-cloud": "latest"
+  }
+}
