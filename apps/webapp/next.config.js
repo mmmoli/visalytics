@@ -12,6 +12,11 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
+  reactStrictMode: true,
+  i18n: {
+    locales: ['en'],
+    defaultLocale: 'en',
+  },
 };
 
 const plugins = [
