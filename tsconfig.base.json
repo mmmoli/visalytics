@@ -18,7 +18,18 @@
     "incremental": true,
     "noUncheckedIndexedAccess": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@visalytics/modules/applications/api": [
+        "libs/modules/applications/api/src/index.ts"
+      ],
+      "@visalytics/modules/applications/web": [
+        "libs/modules/applications/web/src/index.ts"
+      ],
+      "@visalytics/shared-services/trpc": [
+        "libs/shared-services/trpc/src/index.ts"
+      ],
+      "@visalytics/traits": ["libs/traits/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
