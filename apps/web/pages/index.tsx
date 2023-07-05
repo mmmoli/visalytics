@@ -3,12 +3,17 @@ import { api } from '../utils/api';
 import { useCallback } from 'react';
 
 const IndexPage: NextPage = () => {
+  const utils = api.useContext();
   const { data: message } = api.example.sayHi.useQuery({
     name: 'John',
   });
 
   const { data: people } = api.example.people.useQuery();
-  const { mutate: joinCommand } = api.example.join.useMutation();
+  const { mutate: joinCommand } = api.example.join.useMutation({
+    onSuccess: () => {
+      utils.example.people.invalidate();
+    },
+  });
 
   const onClickHandler = useCallback(() => {
     joinCommand({
