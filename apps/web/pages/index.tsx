@@ -1,26 +1,8 @@
 import type { NextPage } from 'next';
-import { api } from '../utils/api';
-import { useCallback } from 'react';
+import { useIndexPage } from '../view-models';
 
 const IndexPage: NextPage = () => {
-  const utils = api.useContext();
-  const { data: message } = api.example.sayHi.useQuery({
-    name: 'John',
-  });
-
-  const { data: people } = api.example.people.useQuery();
-  const { mutate: joinCommand } = api.example.join.useMutation({
-    onSuccess: () => {
-      utils.example.people.invalidate();
-    },
-  });
-
-  const onClickHandler = useCallback(() => {
-    joinCommand({
-      name: 'John',
-    });
-  }, [joinCommand]);
-
+  const { message, onClickHandler, people } = useIndexPage();
   return (
     <div>
       <h1>Message</h1>
