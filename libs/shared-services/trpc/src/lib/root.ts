@@ -1,14 +1,13 @@
-import { ApplicationsTRPCRouterFactory } from '@visalytics/modules/applications/api';
-import { router, publicProcedure } from './trpc';
+import { createTRPCRouter } from './trpc';
+import { applicationsRouter } from './routes/applications';
+import { createTRPCNext } from '@trpc/next';
+import { exampleRouter } from './routes/example';
 
-const params = {
-  router,
-  publicProcedure,
-};
-
-export const appRouter = router({
-  applications: new ApplicationsTRPCRouterFactory(params).build(),
+export const appRouter = createTRPCRouter({
+  applications: applicationsRouter,
+  example: exampleRouter
 });
 
-// export type definition of API
 export type AppRouter = typeof appRouter;
+
+export type API  = ReturnType<typeof createTRPCNext<AppRouter>>
