@@ -1,7 +1,7 @@
 import { createTRPCRouter, publicProcedure } from '../trpc';
 import { z } from 'zod';
 
-interface Person {
+export interface Person {
   name: string;
 }
 const people: Person[] = [];
