@@ -3,11 +3,11 @@ import { api } from '../../utils/api';
 
 export const useIndexPage = () => {
   const utils = api.useContext();
-  const { data: message } = api.example.sayHi.useQuery({
+  const messageQuery = api.example.sayHi.useQuery({
     name: 'John',
   });
 
-  const { data: people } = api.example.people.useQuery();
+  const peopleQuery = api.example.people.useQuery();
   const { mutate: joinCommand } = api.example.join.useMutation({
     onSuccess: () => {
       utils.example.people.invalidate();
@@ -21,8 +21,8 @@ export const useIndexPage = () => {
   }, [joinCommand]);
 
   return {
-    message,
-    people,
+    messageQuery,
+    peopleQuery,
     onClickHandler,
   };
 };
