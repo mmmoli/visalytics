@@ -8,21 +8,39 @@ export const useIndexPage = () => {
   });
 
   const peopleQuery = api.example.people.useQuery();
-  const { mutate: joinCommand } = api.example.join.useMutation({
+
+  const joinMutation = api.example.join.useMutation({
     onSuccess: () => {
       utils.example.people.invalidate();
     },
   });
 
-  const onClickHandler = useCallback(() => {
-    joinCommand({
+  const createApplicationMutation =
+    api.applications.createApplication.useMutation();
+
+  const joinCommandHandler = useCallback(() => {
+    joinMutation.mutate({
       name: 'John',
     });
-  }, [joinCommand]);
+  }, [joinMutation]);
+
+  const createApplicationHandler = useCallback(() => {
+    createApplicationMutation.mutate({
+      fee: {
+        currency: 'USD',
+        value: 23.34,
+      },
+      fromNationCode: 'GBR',
+      toNationCode: 'ITA',
+    });
+  }, [createApplicationMutation]);
 
   return {
     messageQuery,
     peopleQuery,
-    onClickHandler,
+    createApplicationMutation,
+    joinMutation,
+    joinCommandHandler,
+    createApplicationHandler,
   };
 };

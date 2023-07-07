@@ -1,6 +1,4 @@
-import * as impl from '../instances';
-import { ApplicationsTRPCController } from '../trpc/applications-trpc-controller';
+// import * as impl from '../instances';
+import { controller } from '../trpc/applications-trpc-controller';
 
-export const applicationsTRPCController = new ApplicationsTRPCController({
-  createApplicationUseCase: impl.createApplicationUseCase,
-});
+export { controller };
