@@ -26,12 +26,20 @@ export const useIndexPage = () => {
 
   const createApplicationHandler = useCallback(() => {
     createApplicationMutation.mutate({
-      fee: {
-        currency: 'USD',
-        value: 23.34,
-      },
       fromNationCode: 'GBR',
       toNationCode: 'ITA',
+      submission: {
+        fee: {
+          amount: 23.45,
+          currency: 'GBP',
+        },
+        date: new Date(2019, 4, 4),
+      },
+      decision: {
+        outcome: 'GRANTED',
+        durationInDays: 34,
+        receivedOn: new Date(2019, 5, 4),
+      },
     });
   }, [createApplicationMutation]);
 

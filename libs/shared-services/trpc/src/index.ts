@@ -1,6 +1,6 @@
 import { type inferRouterInputs, type inferRouterOutputs } from '@trpc/server';
 import { appRouter, AppRouter, API } from './lib/root';
-import { createTRPCContext } from '@visalytics/interfaces';
+import { createTRPCContext } from './lib/trpc';
 
 /**
  * The `appRouter` export is used to configure the Next.js tRPC API endpoint, and the `AppRouter` type is used by the Next.js app to create the type-safe tRPC client.

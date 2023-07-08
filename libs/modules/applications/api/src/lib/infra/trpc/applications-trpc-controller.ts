@@ -1,7 +1,8 @@
-import { AnyRootConfig } from '@trpc/server';
+import { AnyRootConfig, TRPCError } from '@trpc/server';
 import { createApplicationUseCase } from '../instances';
 import type { BaseProcedure, RouterFactory } from '@visalytics/interfaces';
 import { z } from 'zod';
+import { CreateApplicationInputSchema } from '../../use-cases';
 
 export const controller = {
   createApplication: createApplicationUseCase.execute,
@@ -14,16 +15,16 @@ export function createTRPCModuleRouter<
 >(createRouter: TRouterFactory, baseProcedure: TBaseProcedure) {
   return createRouter({
     createApplication: baseProcedure
-      .input(
-        z.object({
-          fee: z.object({
-            value: z.number().positive(),
-            currency: z.enum([`BRL`, `USD`, `EUR`, `JPY`]),
-          }),
-          fromNationCode: z.string(),
-          toNationCode: z.string(),
-        })
-      )
-      .mutation((opts) => controller.createApplication(opts.input)),
+      .input(CreateApplicationInputSchema)
+      .mutation(async (opts) => {
+        const result = await controller.createApplication(opts.input);
+        if (result.isFail()) {
+          throw new TRPCError({
+            code: 'BAD_REQUEST',
+            message: result.error(),
+          });
+        }
+        return result.value();
+      }),
   });
 }
