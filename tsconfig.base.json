@@ -19,6 +19,7 @@
     "noUncheckedIndexedAccess": true,
     "baseUrl": ".",
     "paths": {
+      "@visalytics/interfaces": ["libs/interfaces/src/index.ts"],
       "@visalytics/modules/applications/api": [
         "libs/modules/applications/api/src/index.ts"
       ],

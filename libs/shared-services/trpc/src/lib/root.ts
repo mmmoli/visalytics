@@ -1,7 +1,13 @@
-import { createTRPCRouter } from './trpc';
-import { applicationsRouter } from './routes/applications';
+import { createTRPCRouter, publicProcedure } from './trpc';
 import { createTRPCNext } from '@trpc/next';
 import { exampleRouter } from './routes/example';
+import { createTRPCModuleRouter } from '@visalytics/modules/applications/api';
+
+export const applicationsRouter = createTRPCModuleRouter(
+  createTRPCRouter,
+  publicProcedure
+);
+
 
 export const appRouter = createTRPCRouter({
   applications: applicationsRouter,
