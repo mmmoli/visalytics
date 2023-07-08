@@ -1,4 +1,7 @@
 // import * as impl from '../instances';
-import { controller } from '../trpc/applications-trpc-controller';
+import {
+  controller,
+  createTRPCModuleRouter,
+} from '../trpc/applications-trpc-controller';
 
-export { controller };
+export { controller, createTRPCModuleRouter };
