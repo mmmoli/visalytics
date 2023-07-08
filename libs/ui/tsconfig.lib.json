@@ -2,11 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
-    "types": ["node", "vite/client"],
-    "paths": {
-      "@visalytics/ui": ["libs/ui/src/index.ts"],
-      "@visalytics/ui/*": ["libs/ui/src/*"]
-    }
+    "types": ["node", "vite/client"]
   },
   "files": [
     "../../node_modules/@nx/react/typings/cssmodule.d.ts",
