@@ -1,7 +1,6 @@
 import { AnyRootConfig, TRPCError } from '@trpc/server';
 import { createApplicationUseCase } from '../instances';
 import type { BaseProcedure, RouterFactory } from '@visalytics/interfaces';
-import { z } from 'zod';
 import { CreateApplicationInputSchema } from '../../use-cases';
 
 export const controller = {

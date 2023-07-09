@@ -11,10 +11,6 @@ export const ApplicationFeeSchema = z.object({
 export type ApplicationFeeProps = z.infer<typeof ApplicationFeeSchema>;
 
 export class ApplicationFee extends ValueObject<ApplicationFeeProps> {
-  private constructor(props: ApplicationFeeProps) {
-    super(props);
-  }
-
   public static override create(
     props: ApplicationFeeProps
   ): IResult<ApplicationFee> {

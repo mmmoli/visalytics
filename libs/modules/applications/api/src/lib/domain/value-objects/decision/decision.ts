@@ -22,10 +22,6 @@ export const DecisionSchema = z.discriminatedUnion('outcome', [
 export type DecisionProps = z.infer<typeof DecisionSchema>;
 
 export class Decision extends ValueObject<DecisionProps> {
-  private constructor(props: DecisionProps) {
-    super(props);
-  }
-
   public static override create(props: DecisionProps): IResult<Decision> {
     const result = DecisionSchema.safeParse(props);
     if (!result.success) {

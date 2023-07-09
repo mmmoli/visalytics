@@ -31,6 +31,9 @@ dependencies:
   clsx:
     specifier: ^1.2.1
     version: 1.2.1
+  countries-list:
+    specifier: ^2.6.1
+    version: 2.6.1
   jotai:
     specifier: ^2.2.1
     version: 2.2.1(react@18.2.0)
@@ -5613,6 +5616,10 @@ packages:
       parse-json: 5.2.0
       path-type: 4.0.0
     dev: true
+
+  /countries-list@2.6.1:
+    resolution: {integrity: sha512-jXM1Nv3U56dPQ1DsUSsEaGmLHburo4fnB7m+1yhWDUVvx5gXCd1ok/y3gXCjXzhqyawG+igcPYcAl4qjkvopaQ==}
+    dev: false
 
   /create-require@1.1.1:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}

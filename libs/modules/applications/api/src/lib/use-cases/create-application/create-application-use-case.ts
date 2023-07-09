@@ -35,12 +35,12 @@ export class CreateApplicationUseCase
   async execute(data: CreateApplicationInput): Promise<Result> {
     let application: AnyApplication;
     // From Nation
-    const fromNationResult = Nation.createFromCode(data.fromNationCode);
+    const fromNationResult = Nation.create(data.fromNationCode);
     if (fromNationResult.isFail()) return Fail(fromNationResult.error());
     const fromNation = fromNationResult.value();
 
     // To Nation
-    const toNationResult = Nation.createFromCode(data.toNationCode);
+    const toNationResult = Nation.create(data.toNationCode);
     if (toNationResult.isFail()) return Fail(toNationResult.error());
     const toNation = toNationResult.value();
 

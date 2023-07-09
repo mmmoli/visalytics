@@ -8,10 +8,6 @@ export const SubmissionDateSchema = z.date().max(new Date(), {
 export type SubmissionDateProps = z.infer<typeof SubmissionDateSchema>;
 
 export class SubmissionDate extends ValueObject<SubmissionDateProps> {
-  private constructor(props: SubmissionDateProps) {
-    super(props);
-  }
-
   public static override create(
     props: SubmissionDateProps
   ): IResult<SubmissionDate> {
