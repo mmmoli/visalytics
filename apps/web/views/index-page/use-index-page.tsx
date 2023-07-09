@@ -26,8 +26,8 @@ export const useIndexPage = () => {
 
   const createApplicationHandler = useCallback(() => {
     createApplicationMutation.mutate({
-      fromNationCode: 'GBR',
-      toNationCode: 'ITA',
+      fromNationCode: 'GB',
+      toNationCode: 'IT',
       submission: {
         fee: {
           amount: 23.45,

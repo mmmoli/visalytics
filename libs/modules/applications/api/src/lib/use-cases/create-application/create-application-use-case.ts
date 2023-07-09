@@ -1,21 +1,23 @@
-import { Fail, Ok, IUseCase, Result } from 'types-ddd';
+import { Fail, Ok, IUseCase, Result, IResult } from 'types-ddd';
 import {
   Nation,
   DecisionSchema,
   SubmissionDateSchema,
   ApplicationFeeSchema,
-  AnyApplication,
   ApplicationFee,
   SubmissionDate,
-  Application,
   Decision,
   SubmittedApplication,
+  PendingApplication,
+  DecidedApplication,
+  CountryCode,
+  CountryCodeSchema,
 } from '../../domain';
 import { z } from 'zod';
 
 export const CreateApplicationInputSchema = z.object({
-  fromNationCode: z.string(),
-  toNationCode: z.string(),
+  fromNationCode: CountryCodeSchema,
+  toNationCode: CountryCodeSchema,
   submission: z
     .object({
       date: SubmissionDateSchema,
@@ -33,42 +35,46 @@ export class CreateApplicationUseCase
   implements IUseCase<CreateApplicationInput, Result>
 {
   async execute(data: CreateApplicationInput): Promise<Result> {
-    let application: AnyApplication;
-    // From Nation
-    const fromNationResult = Nation.create(data.fromNationCode);
+    let applicationResult: IResult<
+      PendingApplication | SubmittedApplication | DecidedApplication
+    >;
+
+    const fromNationResult = Nation.create({
+      code: data.fromNationCode as CountryCode,
+    });
     if (fromNationResult.isFail()) return Fail(fromNationResult.error());
-    const fromNation = fromNationResult.value();
 
     // To Nation
-    const toNationResult = Nation.create(data.toNationCode);
+    const toNationResult = Nation.create({
+      code: data.toNationCode as CountryCode,
+    });
     if (toNationResult.isFail()) return Fail(toNationResult.error());
-    const toNation = toNationResult.value();
 
-    const ApplicationResult = Application.create({
-      fromNation,
-      toNation,
+    applicationResult = PendingApplication.create({
+      fromNation: fromNationResult.value(),
+      toNation: toNationResult.value(),
     });
 
-    if (ApplicationResult.isFail()) return Fail(ApplicationResult.error());
-    application = ApplicationResult.value();
+    if (applicationResult.isFail()) return Fail(applicationResult.error());
 
     if (data.submission) {
       const feeResult = ApplicationFee.create(data.submission.fee);
       if (feeResult.isFail()) return Fail(feeResult.error());
-      const fee = feeResult.value();
 
       const submissionDateResult = SubmissionDate.create(data.submission.date);
-      if (submissionDateResult.isFail())
-        return Fail(submissionDateResult.error());
-      const submissionDate = submissionDateResult.value();
 
-      const SubmittedApplicationResult = application.withSubmission({
-        fee,
-        submissionDate,
+      if (submissionDateResult.isFail()) {
+        return Fail(submissionDateResult.error());
+      }
+
+      applicationResult = (applicationResult.value() as PendingApplication).withSubmission({
+        fee: feeResult.value(),
+        submissionDate: submissionDateResult.value(),
       });
-      if (SubmittedApplicationResult.isFail())
-        return Fail(SubmittedApplicationResult.error());
-      application = SubmittedApplicationResult.value();
+
+      if (applicationResult.isFail()) {
+        return Fail(applicationResult.error());
+      }
     } else if (data.decision) {
       return Fail(
         `Cannot create an Application with a decision without it being submited.`
@@ -77,17 +83,22 @@ export class CreateApplicationUseCase
 
     if (data.submission && data.decision) {
       const decisionResult = Decision.create(data.decision);
-      if (decisionResult.isFail()) return Fail(decisionResult.error());
+      if (decisionResult.isFail()) {
+        return Fail(decisionResult.error());
+      }
       const decision = decisionResult.value();
-      const decidedApplicationResult = (
-        application as SubmittedApplication
+      applicationResult = (
+        applicationResult.value() as SubmittedApplication
       ).withDecision({
         decision,
       });
-      if (decidedApplicationResult.isFail())
-        return Fail(decidedApplicationResult.error());
-      application = decidedApplicationResult.value();
+
+      if (applicationResult.isFail()) {
+        return Fail(applicationResult.error());
+      }
     }
+
+    const application = applicationResult.value();
 
     console.log(JSON.stringify(application.toObject(), null, 2));
     return Ok();

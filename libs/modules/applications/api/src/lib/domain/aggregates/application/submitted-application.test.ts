@@ -42,7 +42,6 @@ describe.concurrent('Agg: SubmittedApplication', () => {
     });
 
     expect(decidedApplicationResult.isOk()).toBeTruthy();
-
     const decidedApplication = decidedApplicationResult.value();
     expect(decidedApplication instanceof DecidedApplication).toBeTruthy();
   });

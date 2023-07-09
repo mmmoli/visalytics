@@ -12,6 +12,7 @@ function zodEnumFromObjKeys<K extends string>(
 }
 
 export const CountryCodeSchema = zodEnumFromObjKeys(countries);
+export type CountryCode = z.infer<typeof CountryCodeSchema>;
 
 export const NationSchema = z.object({
   code: CountryCodeSchema,
