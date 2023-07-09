@@ -9,15 +9,16 @@ import {
   Decision,
   SubmittedApplication,
   PendingApplication,
-  DecidedApplication,
   CountryCode,
   CountryCodeSchema,
+  AnyApplication,
 } from '../../domain';
 import { z } from 'zod';
 
 export const CreateApplicationInputSchema = z.object({
   fromNationCode: CountryCodeSchema,
   toNationCode: CountryCodeSchema,
+  travelDate: z.date().optional(),
   submission: z
     .object({
       date: SubmissionDateSchema,
@@ -35,9 +36,7 @@ export class CreateApplicationUseCase
   implements IUseCase<CreateApplicationInput, Result>
 {
   async execute(data: CreateApplicationInput): Promise<Result> {
-    let applicationResult: IResult<
-      PendingApplication | SubmittedApplication | DecidedApplication
-    >;
+    let applicationResult: IResult<AnyApplication>;
 
     const fromNationResult = Nation.create({
       code: data.fromNationCode as CountryCode,
@@ -53,6 +52,7 @@ export class CreateApplicationUseCase
     applicationResult = PendingApplication.create({
       fromNation: fromNationResult.value(),
       toNation: toNationResult.value(),
+      travelDate: data.travelDate,
     });
 
     if (applicationResult.isFail()) return Fail(applicationResult.error());
@@ -67,7 +67,9 @@ export class CreateApplicationUseCase
         return Fail(submissionDateResult.error());
       }
 
-      applicationResult = (applicationResult.value() as PendingApplication).withSubmission({
+      applicationResult = (
+        applicationResult.value() as PendingApplication
+      ).withSubmission({
         fee: feeResult.value(),
         submissionDate: submissionDateResult.value(),
       });
@@ -86,11 +88,11 @@ export class CreateApplicationUseCase
       if (decisionResult.isFail()) {
         return Fail(decisionResult.error());
       }
-      const decision = decisionResult.value();
+
       applicationResult = (
         applicationResult.value() as SubmittedApplication
       ).withDecision({
-        decision,
+        decision: decisionResult.value(),
       });
 
       if (applicationResult.isFail()) {

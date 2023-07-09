@@ -9,6 +9,7 @@ export interface ApplicationProps {
   id?: UID;
   fromNation: Nation;
   toNation: Nation;
+  travelDate?: Date;
 }
 
 export class PendingApplication extends Aggregate<ApplicationProps> {

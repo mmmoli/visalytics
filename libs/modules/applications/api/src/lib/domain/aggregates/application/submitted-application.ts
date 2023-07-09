@@ -11,6 +11,11 @@ export type ApplicationSubmissionProps = {
   submissionDate: SubmissionDate;
 };
 
+export type AnyApplication =
+  | PendingApplication
+  | SubmittedApplication
+  | DecidedApplication;
+
 export type SubmittedApplicationProps = ApplicationProps &
   ApplicationSubmissionProps;
 

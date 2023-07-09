@@ -11,6 +11,7 @@ describe.concurrent('Agg: PendingApplication', () => {
     const applicationResult = PendingApplication.create({
       fromNation,
       toNation,
+      travelDate: new Date(),
     });
     expect(applicationResult.isOk()).toBeTruthy();
   });
@@ -19,6 +20,7 @@ describe.concurrent('Agg: PendingApplication', () => {
     const applicationResult = PendingApplication.create({
       fromNation,
       toNation,
+      travelDate: new Date(),
     });
     expect(applicationResult.isOk()).toBeTruthy();
     const application = applicationResult.value();
@@ -37,6 +39,7 @@ describe.concurrent('Agg: PendingApplication', () => {
     const applicationResult = PendingApplication.create({
       fromNation,
       toNation: fromNation,
+      travelDate: new Date(),
     });
     expect(applicationResult.isFail()).toBeTruthy();
   });

@@ -3,11 +3,18 @@ import { api } from '../../utils/api';
 
 export const useIndexPage = () => {
   const utils = api.useContext();
-  const messageQuery = api.example.sayHi.useQuery({
-    name: 'John',
-  });
+  const messageQuery = api.example.sayHi.useQuery(
+    {
+      name: 'John',
+    },
+    {
+      staleTime: 1000 * 60 * 60 * 2,
+    }
+  );
 
-  const peopleQuery = api.example.people.useQuery();
+  const peopleQuery = api.example.people.useQuery(undefined, {
+    staleTime: 1000 * 60 * 60 * 2,
+  });
 
   const joinMutation = api.example.join.useMutation({
     onSuccess: () => {
@@ -28,6 +35,7 @@ export const useIndexPage = () => {
     createApplicationMutation.mutate({
       fromNationCode: 'GB',
       toNationCode: 'IT',
+      travelDate: new Date(2022, 5, 2),
       submission: {
         fee: {
           amount: 23.45,
