@@ -1,13 +1,7 @@
 import { AnyRootConfig, TRPCError } from '@trpc/server';
-import {
-  createApplicationUseCase,
-  // submitApplicationUseCase,
-} from '../instances';
+import { createApplicationUseCase } from '../instances';
 import type { BaseProcedure, RouterFactory } from '@visalytics/interfaces';
-import {
-  CreateApplicationInputSchema,
-  // SubmitApplicationInputSchema,
-} from '../../use-cases';
+import { CreateApplicationInputSchema } from '../../use-cases';
 
 export function createTRPCModuleRouter<
   TConfig extends AnyRootConfig,
