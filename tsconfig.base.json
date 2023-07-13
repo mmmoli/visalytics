@@ -32,14 +32,8 @@
       "@visalytics/modules/applications/web": [
         "libs/modules/applications/web/src/index.ts"
       ],
-      "@visalytics/shared-services/auth": [
-        "libs/shared-services/auth/src/index.ts"
-      ],
       "@visalytics/shared-services/db": [
         "libs/shared-services/db/src/index.ts"
-      ],
-      "@visalytics/shared-services/env-validator": [
-        "libs/shared-services/env-validator/src/index.ts"
       ],
       "@visalytics/shared-services/trpc": [
         "libs/shared-services/trpc/src/index.ts"

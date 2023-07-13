@@ -2,34 +2,8 @@ import { useCallback } from 'react';
 import { api } from '../../utils/api';
 
 export const useIndexPage = () => {
-  const utils = api.useContext();
-  const messageQuery = api.example.sayHi.useQuery(
-    {
-      name: 'John',
-    },
-    {
-      staleTime: 1000 * 60 * 60 * 2,
-    }
-  );
-
-  const peopleQuery = api.example.people.useQuery(undefined, {
-    staleTime: 1000 * 60 * 60 * 2,
-  });
-
-  const joinMutation = api.example.join.useMutation({
-    onSuccess: () => {
-      utils.example.people.invalidate();
-    },
-  });
-
   const createApplicationMutation =
     api.applications.createApplication.useMutation();
-
-  const joinCommandHandler = useCallback(() => {
-    joinMutation.mutate({
-      name: 'John',
-    });
-  }, [joinMutation]);
 
   const createApplicationHandler = useCallback(() => {
     createApplicationMutation.mutate({
@@ -52,11 +26,7 @@ export const useIndexPage = () => {
   }, [createApplicationMutation]);
 
   return {
-    messageQuery,
-    peopleQuery,
     createApplicationMutation,
-    joinMutation,
-    joinCommandHandler,
     createApplicationHandler,
   };
 };
