@@ -11,16 +11,15 @@ export const ApplicationFeeSchema = z.object({
 export type ApplicationFeeProps = z.infer<typeof ApplicationFeeSchema>;
 
 export class ApplicationFee extends ValueObject<ApplicationFeeProps> {
+  static override isValidProps(props: ApplicationFeeProps): boolean {
+    return ApplicationFeeSchema.safeParse(props).success;
+  }
+
   public static override create(
     props: ApplicationFeeProps
   ): IResult<ApplicationFee> {
-    const result = ApplicationFeeSchema.safeParse(props);
-    if (!result.success) {
-      return Fail(
-        result.error.issues[0]?.message ?? 'Could not create ApplicationFee'
-      );
-    }
-
-    return Ok(new ApplicationFee(result.data));
+    if (!this.isValidProps(props))
+      return Fail('Could not create ApplicationFee');
+    return Ok(new ApplicationFee(props));
   }
 }

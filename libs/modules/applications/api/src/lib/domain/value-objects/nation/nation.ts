@@ -28,12 +28,13 @@ export class Nation extends ValueObject<NationProps> {
     this.country = countries[props.code];
   }
 
+  public static override isValidProps(props: NationProps): boolean {
+    return NationSchema.safeParse(props).success;
+  }
+
   public static override create(props: NationProps): IResult<Nation> {
-    const result = NationSchema.safeParse(props);
-    if (!result.success) {
-      return Fail(result.error.issues[0]?.message ?? 'Could not create Nation');
-    }
-    return Ok(new Nation(result.data));
+    if (!this.isValidProps(props)) return Fail('Could not create Nation');
+    return Ok(new Nation(props));
   }
 
   public get name(): string {

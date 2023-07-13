@@ -22,14 +22,15 @@ export const DecisionSchema = z.discriminatedUnion('outcome', [
 export type DecisionProps = z.infer<typeof DecisionSchema>;
 
 export class Decision extends ValueObject<DecisionProps> {
+  static override isValidProps(props: DecisionProps): boolean {
+    return DecisionSchema.safeParse(props).success;
+  }
+
   public static override create(props: DecisionProps): IResult<Decision> {
-    const result = DecisionSchema.safeParse(props);
-    if (!result.success) {
-      return Fail(
-        result.error.issues[0]?.message ?? 'Could not create Decision'
-      );
+    if (!this.isValidProps(props)) {
+      return Fail('Could not create Decision');
     }
 
-    return Ok(new Decision(result.data));
+    return Ok(new Decision(props));
   }
 }
