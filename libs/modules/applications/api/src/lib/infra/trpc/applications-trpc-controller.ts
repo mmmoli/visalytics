@@ -4,12 +4,7 @@ import {
   // submitApplicationUseCase,
 } from '../instances';
 import type { BaseProcedure, RouterFactory } from '@visalytics/interfaces';
-import {
-  CreateApplicationInputSchema,
-  SubmitApplicationInputSchema,
-} from '../../use-cases';
-import { z } from 'zod';
-import { IUseCase } from 'types-ddd';
+import { CreateApplicationInputSchema } from '../../use-cases';
 
 export const controller = {
   createApplication: createApplicationUseCase.execute,
@@ -49,10 +44,15 @@ export const controller = {
 export function createTRPCModuleRouter<
   TConfig extends AnyRootConfig,
   TRouterFactory extends RouterFactory<TConfig>,
-  TBaseProcedure extends BaseProcedure<TConfig>
->(createRouter: TRouterFactory, baseProcedure: TBaseProcedure) {
+  TBaseProcedure extends BaseProcedure<TConfig>,
+  TAuthProcedure extends BaseProcedure<TConfig>
+>(
+  createRouter: TRouterFactory,
+  baseProcedure: TBaseProcedure,
+  authProcedure: TAuthProcedure
+) {
   return createRouter({
-    list: baseProcedure.query(async () => {
+    list: authProcedure.query(async () => {
       return [
         {
           id: '1',
@@ -66,7 +66,7 @@ export function createTRPCModuleRouter<
         },
       ];
     }),
-    createApplication: baseProcedure
+    createApplication: authProcedure
       .input(CreateApplicationInputSchema)
       .mutation(async (opts) => {
         const result = await controller.createApplication(opts.input);

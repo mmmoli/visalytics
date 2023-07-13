@@ -12,6 +12,19 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
+
+  // Boring.
+  // See https://github.com/nrwl/nx/issues/17940
+  env: {
+    NX_PUBLIC_CLERK_PUBLISHABLE_KEY:
+      process.env.NX_PUBLIC_CLERK_PUBLISHABLE_KEY ?? '',
+    NX_PUBLIC_CLERK_SIGN_IN_URL: process.env.NX_PUBLIC_CLERK_SIGN_IN_URL ?? '',
+    NX_PUBLIC_CLERK_SIGN_UP_URL: process.env.NX_PUBLIC_CLERK_SIGN_UP_URL ?? '',
+    NX_PUBLIC_CLERK_AFTER_SIGN_IN_URL:
+      process.env.NX_PUBLIC_CLERK_AFTER_SIGN_IN_URL ?? '',
+    NX_PUBLIC_CLERK_AFTER_SIGN_UP_URL:
+      process.env.NX_PUBLIC_CLERK_AFTER_SIGN_UP_URL ?? '',
+  },
 };
 
 const plugins = [

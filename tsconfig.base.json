@@ -3,8 +3,8 @@
   "compilerOptions": {
     "target": "es2017",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "checkJs": true,
+    "checkJs": false,
+    "allowJs": false,
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -20,6 +20,12 @@
     "baseUrl": ".",
     "paths": {
       "@visalytics/interfaces": ["libs/interfaces/src/index.ts"],
+      "@visalytics/modules/accounts/web": [
+        "libs/modules/accounts/web/src/index.ts"
+      ],
+      "@visalytics/modules/accounts/web/nextjs": [
+        "libs/modules/accounts/web/src/lib/nextjs/index.ts"
+      ],
       "@visalytics/modules/applications/api": [
         "libs/modules/applications/api/src/index.ts"
       ],
