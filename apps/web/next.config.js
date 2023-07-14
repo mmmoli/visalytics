@@ -59,10 +59,8 @@ const nextConfig = {
       '*': [
         'node_modules/.pnpm/@swc+core-linux-x64-gnu@1.3.51',
         'node_modules/.pnpm/@swc+core-linux-x64-musl@1.3.51',
-        'node_modules/.pnpm/next@13.4.1_@babel+core@7.22.5_react-dom@18.2.0_react@18.2.0',
         'node_modules/.pnpm/@esbuild+linux-x64@0.17.19',
         'node_modules/.pnpm/webpack@5.88.1_@swc+core@1.3.51',
-        'node_modules/.pnpm/react-dom@18.2.0_react@18.2.0',
         'node_modules/.pnpm/caniuse-lite@1.0.30001509',
         'node_modules/.pnpm/terser@5.18.2',
       ],
