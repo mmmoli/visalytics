@@ -2,6 +2,7 @@
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { composePlugins, withNx } = require('@nx/next');
+const path = require('path');
 
 /**
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
@@ -24,6 +25,48 @@ const nextConfig = {
       process.env.NX_PUBLIC_CLERK_AFTER_SIGN_IN_URL ?? '',
     NX_PUBLIC_CLERK_AFTER_SIGN_UP_URL:
       process.env.NX_PUBLIC_CLERK_AFTER_SIGN_UP_URL ?? '',
+    NX_DOMAIN: process.env.NX_DOMAIN ?? '',
+  },
+
+  async headers() {
+    return [
+      {
+        // matching all API routes
+        source: '/api/:path*',
+        headers: [
+          { key: 'Access-Control-Allow-Credentials', value: 'true' },
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: process.env.NX_DOMAIN ?? 'http://localhost:4200',
+          }, // replace this your actual origin
+          {
+            key: 'Access-Control-Allow-Methods',
+            value: 'GET,DELETE,PATCH,POST,PUT',
+          },
+          {
+            key: 'Access-Control-Allow-Headers',
+            value:
+              'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
+          },
+        ],
+      },
+    ];
+  },
+
+  experimental: {
+    outputFileTracingRoot: path.join(__dirname, '../../'),
+    outputFileTracingExcludes: {
+      '*': [
+        'node_modules/.pnpm/@swc+core-linux-x64-gnu@1.3.51',
+        'node_modules/.pnpm/@swc+core-linux-x64-musl@1.3.51',
+        'node_modules/.pnpm/next@13.4.1_@babel+core@7.22.5_react-dom@18.2.0_react@18.2.0',
+        'node_modules/.pnpm/@esbuild+linux-x64@0.17.19',
+        'node_modules/.pnpm/webpack@5.88.1_@swc+core@1.3.51',
+        'node_modules/.pnpm/react-dom@18.2.0_react@18.2.0',
+        'node_modules/.pnpm/caniuse-lite@1.0.30001509',
+        'node_modules/.pnpm/terser@5.18.2',
+      ],
+    },
   },
 };
 
