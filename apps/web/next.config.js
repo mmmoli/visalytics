@@ -28,41 +28,41 @@ const nextConfig = {
     NX_DOMAIN: process.env.NX_DOMAIN ?? '',
   },
 
-  async headers() {
-    return [
-      {
-        // matching all API routes
-        source: '/api/:path*',
-        headers: [
-          { key: 'Access-Control-Allow-Credentials', value: 'true' },
-          { key: 'Access-Control-Allow-Origin', value: '*' },
-          {
-            key: 'Access-Control-Allow-Methods',
-            value: 'GET,OPTIONS,PATCH,DELETE,POST,PUT',
-          },
-          {
-            key: 'Access-Control-Allow-Headers',
-            value:
-              'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
-          },
-        ],
-      },
-    ];
-  },
+  // async headers() {
+  //   return [
+  //     {
+  //       // matching all API routes
+  //       source: '/api/:path*',
+  //       headers: [
+  //         { key: 'Access-Control-Allow-Credentials', value: 'true' },
+  //         { key: 'Access-Control-Allow-Origin', value: '*' },
+  //         {
+  //           key: 'Access-Control-Allow-Methods',
+  //           value: 'GET,OPTIONS,PATCH,DELETE,POST,PUT',
+  //         },
+  //         {
+  //           key: 'Access-Control-Allow-Headers',
+  //           value:
+  //             'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
+  //         },
+  //       ],
+  //     },
+  //   ];
+  // },
 
-  experimental: {
-    outputFileTracingRoot: path.join(__dirname, '../../'),
-    outputFileTracingExcludes: {
-      '*': [
-        'node_modules/.pnpm/@swc+core-linux-x64-gnu@1.3.51',
-        'node_modules/.pnpm/@swc+core-linux-x64-musl@1.3.51',
-        'node_modules/.pnpm/@esbuild+linux-x64@0.17.19',
-        'node_modules/.pnpm/webpack@5.88.1_@swc+core@1.3.51',
-        'node_modules/.pnpm/caniuse-lite@1.0.30001509',
-        'node_modules/.pnpm/terser@5.18.2',
-      ],
-    },
-  },
+  // experimental: {
+  //   outputFileTracingRoot: path.join(__dirname, '../../'),
+  //   outputFileTracingExcludes: {
+  //     '*': [
+  //       'node_modules/.pnpm/@swc+core-linux-x64-gnu@1.3.51',
+  //       'node_modules/.pnpm/@swc+core-linux-x64-musl@1.3.51',
+  //       'node_modules/.pnpm/@esbuild+linux-x64@0.17.19',
+  //       'node_modules/.pnpm/webpack@5.88.1_@swc+core@1.3.51',
+  //       'node_modules/.pnpm/caniuse-lite@1.0.30001509',
+  //       'node_modules/.pnpm/terser@5.18.2',
+  //     ],
+  //   },
+  // },
 };
 
 const plugins = [
