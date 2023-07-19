@@ -44,6 +44,13 @@ export class Nation extends ValueObject<NationProps> {
   public get emoji(): string {
     return this.country.emoji;
   }
+
+  public static all(): IResult<Nation[]> {
+    const nations = Object.keys(countries).map((code) => {
+      return Nation.create({ code: code as CountryCode }).value();
+    });
+    return Ok(nations);
+  }
 }
 
 export default Nation;

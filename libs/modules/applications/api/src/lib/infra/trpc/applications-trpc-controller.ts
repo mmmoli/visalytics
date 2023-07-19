@@ -2,6 +2,7 @@ import { AnyRootConfig, TRPCError } from '@trpc/server';
 import { createApplicationUseCase } from '../instances';
 import type { BaseProcedure, RouterFactory } from '@visalytics/interfaces';
 import { CreateApplicationInputSchema } from '../../use-cases';
+import { Nation, NationToInfraAdapter } from '../../domain';
 
 export function createTRPCModuleRouter<
   TConfig extends AnyRootConfig,
@@ -14,6 +15,11 @@ export function createTRPCModuleRouter<
   authProcedure: TAuthProcedure
 ) {
   return createRouter({
+    availableNations: baseProcedure.query(async () => {
+      const adapter = new NationToInfraAdapter();
+      const nations = Nation.all().value();
+      return nations.map((nation) => nation.toObject(adapter));
+    }),
     list: authProcedure.query(async () => {
       return [
         {

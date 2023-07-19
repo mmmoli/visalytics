@@ -37,4 +37,9 @@ describe.concurrent('VO: Nation', () => {
     }).value().emoji;
     expect(emoji).toBe('🇺🇸');
   });
+
+  it('can list all', async () => {
+    const nations = Nation.all().value();
+    expect(nations.length).toBeGreaterThan(0);
+  });
 });
