@@ -19,7 +19,7 @@ export const useApplicationForm = () => {
           amount: 23.45,
           currency: 'GBP',
         },
-        date: new Date(2019, 4, 4),
+        // date: new Date(2019, 4, 4),
       },
       decision: {
         outcome: 'GRANTED',
